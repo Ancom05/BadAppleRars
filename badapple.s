@@ -24,6 +24,7 @@ _start:
 	la a0, videofile
 	jal OPENFILE
 	add s7, zero, a0
+	addi s11, zero, 1
 	jal READFILE
 CALLLOOP:
 	addi t3, zero, 186
@@ -53,11 +54,15 @@ exit:
 	ecall
 	
 DRAW:
-	beqz t3, ENDDRAW
-	addi t3, t3, -1
+	beq t3, s11 DRAWSINGLEPIXEL
+	blez t3, ENDDRAW
+	addi t3, t3, -2
+	sd t1, 0(t0)
+	addi t0, t0, 8
+	j DRAW
+DRAWSINGLEPIXEL:
 	sw t1, 0(t0)
 	addi t0, t0, 4
-	j DRAW
 ENDDRAW:
 	blt s0, s1, RETURNDRAW
 	sub s0, s0, s5
@@ -86,6 +91,3 @@ READFILE:
 	ecall
 	jalr zero, 0(ra)
 
-DEBUG:
-	add s11, zero, zero
-	j ENDCOLORCHOICE
