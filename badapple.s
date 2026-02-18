@@ -20,7 +20,8 @@ _start:
 	addi s5, s1, 1
 	li t0, 0x10040000
 	#add s2, s2, zero 
-	add t1, zero, zero
+	li t1, 0x00FFFFFF
+	#add t1, zero, zero
 	la a0, videofile
 	jal OPENFILE
 	add s7, zero, a0
@@ -36,6 +37,7 @@ SKIPFILEREAD:
 	bgt t6, zero, NORESET
 	#blt t5, t3, NORESET
 	beq t6, s4, NORESET
+	#jal READFILE 
 	li t0, 0x10040000
    	#add t5, zero, zero
 	#add s2, s2, zero 
