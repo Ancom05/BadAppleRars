@@ -2,7 +2,6 @@
 .data
 	length: .word 4096
 	videofile: .asciz "bad_apple.dat"
-	audiofile: .asciz "bad_apple_audio.dat"
 .text
 _start:
 	la t2, length
@@ -19,7 +18,7 @@ _start:
 	addi s4, zero, 1
 	addi s5, s1, 1
 	li t0, 0x10040000
-	#add s2, s2, zero 
+	#add s2, s2, zero
 	li t1, 0x00FFFFFF
 	#add t1, zero, zero
 	la a0, videofile
@@ -32,29 +31,29 @@ CALLLOOP:
 	#bge t5, t2, exit
 	remu t6, t5, t3
 	ble t4, s8, SKIPFILEREAD
-	jal READFILE 
+	jal READFILE
 SKIPFILEREAD:
 	bgt t6, zero, NORESET
 	#blt t5, t3, NORESET
 	beq t6, s4, NORESET
-	#jal READFILE 
+	#jal READFILE
 	li t0, 0x10040000
    	#add t5, zero, zero
-	#add s2, s2, zero 
+	#add s2, s2, zero
 	add t1, zero, zero
 NORESET:
 	lbu  t3, 0(t4)
 	blt s0, s1, COLORCHOICE
 ENDCOLORCHOICE:
 	add s0, s0, t3
-	jal DRAW	
+	jal DRAW
 	addi t4, t4, 1
 	add s4, t6, zero
 	j CALLLOOP
 exit:
 	addi x17, zero, 10
 	ecall
-	
+
 DRAW:
 	beq t3, s11 DRAWSINGLEPIXEL
 	blez t3, ENDDRAW
@@ -75,17 +74,17 @@ ENDDRAW:
 	add s0, zero, zero
 RETURNDRAW:
 	jalr zero, ra, 0
-	
+
 COLORCHOICE:
 	not t1, t1
 	j ENDCOLORCHOICE
 OPENFILE:
-	addi x17, zero, 1024 
+	addi x17, zero, 1024
 	add a1, zero, zero
 	ecall
 	jalr zero, 0(ra)
 READFILE:
-	addi x17, zero, 63 
+	addi x17, zero, 63
 	add a0, zero, s7
 	add t4, zero, s9
 	add a1, zero, s9
