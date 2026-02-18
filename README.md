@@ -4,5 +4,6 @@ This is a simple toy project which plays the entirety of Bad Apple on the 256x25
 
 <p align="center">
 Here's a short gif showing the final result: <br>
+<br>
   <img src="https://github.com/Ancom05/BadAppleRars/blob/master/example.gif" alt="animated" />
 </p>
